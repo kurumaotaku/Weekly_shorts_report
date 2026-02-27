@@ -296,7 +296,8 @@ def main():
 #SEND Discord channel
 def send_to_discord(message):
     data = {"content": message}
-    requests.post(DISCORD_WEBHOOK_URL+"?wait=true", json=data)
+    resp = requests.post(DISCORD_WEBHOOK_URL+"?wait=true", json=data)
+    return resp
 
 #直接このPythonファイル実行したとき用の処理だよ。for cron job / WEBHOOK
 if __name__ == '__main__':
