@@ -1,3 +1,5 @@
-Main.pyが実運用で使うアプリ
-いまのとこRenderでcronjob実行しようかなと考えている
-discordbot.pyはコマンド起動用だけど、正直いらないかも　デバッグにしかつかえなさそう
+Main=pyがコアロジック
+discordbot.pyがrerunとか用のbot
+
+最初Renderにデプロイしたけどレートリミットエラー（共有IP）やばかったので
+railwayにPaasを変更
