@@ -5,6 +5,8 @@ import time
 import asyncio
 import os
 from dotenv import load_dotenv
+from flask import Flask
+import threading
 
 ###マニュアル
 #サーバー管理者が「/run_wsr」とチャットするとレポートを作成してくれます
@@ -38,6 +40,26 @@ async def on_message(message):
             await message.channel.send(resp)
     else:
         return
+    
+# -------------------
+# Ping 用 Flask サーバー Renderのスリープ防ぐ用のエンドポイント
+# -------------------
+app = Flask(__name__)
+
+@app.route("/ping")
+def ping():
+    return "alive", 200  # Ping用エンドポイント
+
+# Flask を別スレッドで起動
+def run_flask():
+    port = int(os.getenv("PORT", 10000))  # Render が割り当てる PORT 環境変数を使う
+    app.run(host="0.0.0.0", port=port)
+
+threading.Thread(target=run_flask, daemon=True).start()
+
+# -------------------
+# Discord Bot 起動
+# -------------------
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
