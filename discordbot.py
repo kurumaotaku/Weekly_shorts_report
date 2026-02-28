@@ -1,7 +1,7 @@
 # インストールした discord.py を読み込む
 import discord
 from main import main
-import time
+import sys
 import asyncio
 import os
 from dotenv import load_dotenv
@@ -36,9 +36,13 @@ async def on_message(message):
     if message.author.guild_permissions.administrator:
         # 「/run_wsr」と発言したらレポートを発行
         if message.content == '/run_wsr':
-            await message.channel.send("処理中です…⏳")
-            resp = await asyncio.to_thread(main)
-            await message.channel.send(resp)
+            try:
+                await message.channel.send("ちょっとまってね")
+                resp = await asyncio.to_thread(main)
+                await message.channel.send(resp)
+            except Exception as e:
+                await message.channel.send("なんかエラーでてるので強制終了します")
+                sys.exit(0)
     else:
         return
     

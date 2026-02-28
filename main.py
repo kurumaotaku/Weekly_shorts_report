@@ -1,4 +1,4 @@
-import base64
+import sys
 import json
 import os
 import re
@@ -302,14 +302,20 @@ def send_to_discord(message):
 
 #直接このPythonファイル実行したとき用の処理だよ。for cron job / WEBHOOK
 if __name__ == '__main__':
-    resp = send_to_discord("処理中です…⏳")
-    msg_id = resp.json()["id"]
+    try:
+        resp = send_to_discord("WSレポート処理中です…⏳")
+        msg_id = resp.json()["id"]
 
-    #メイン処理
-    result = main()
+        #メイン処理
+        result = main()
 
-    # 処理中ですを消す
-    requests.delete(f"{DISCORD_WEBHOOK_URL}/messages/{msg_id}")
+        # 処理中ですを消す
+        requests.delete(f"{DISCORD_WEBHOOK_URL}/messages/{msg_id}")
 
-    #出力
-    send_to_discord(result)
+        #出力
+        send_to_discord(result)
+        sys.exit(0)
+
+    except Exception as E:
+        send_to_discord("なんかエラーでてるので強制終了します")
+        sys.exit(0)
