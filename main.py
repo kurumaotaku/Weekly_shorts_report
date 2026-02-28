@@ -22,7 +22,8 @@ from google import genai
 #DISCORD_WEBHOOK_URL:DiscordのWebhook用のURLだよ。投げたいチャンネルのURL発行して入れてね
 
 # --- CONFIGURATION ---
-load_dotenv("environments.env")
+# load_dotoenvはローカル用
+#load_dotenv("environments.env")
 AUTHOR = os.getenv("AUTHOR")
 EMAIL = os.getenv("EMAIL")
 CRED = os.getenv("CRED")

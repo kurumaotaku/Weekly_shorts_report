@@ -13,7 +13,8 @@ import threading
 #定時処理はホスト側で実施するつもり
 
 # アクセストークンを読み込む
-load_dotenv("environments.env")
+# load_dotoenvはローカル用
+#load_dotenv("environments.env")
 TOKEN = os.getenv("DISCORDBOT_API_KEY")
 
 # 接続に必要なオブジェクトを生成
